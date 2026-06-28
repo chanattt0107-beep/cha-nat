@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChaNat - เรทงานลงสีของตกแต่งร้านชา</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #ffe6f0;
+            --paper: #ffffff;
+            --text-dark: #8a516b;
+            --text-light: #bd859b;
+            --accent-pink: #eb7aa6;
+            --accent-yellow: #fcf2b6;
+            --mint: #a2dcd4;
+            --peach: #ffc2b3;
+            --sky: #b8e9ed;
+            --line-color: rgba(235, 122, 166, 0.2);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            background-image: repeating-linear-gradient(to right, #ffe6f0, #ffe6f0 40px, #ffdbee 40px, #ffdbee 80px);
+            font-family: 'Mitr', sans-serif;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .font-fredoka { font-family: 'Fredoka', sans-serif; }
+
+        .paper-container {
+            background-color: var(--paper);
+            position: relative;
+            background-image: repeating-linear-gradient(to bottom, transparent, transparent 35px, var(--line-color) 35px, var(--line-color) 36px);
+            background-position: top 40px center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+        }
+
+        .jagged-top {
+            position: absolute;
+            top: -12px; left: 0; width: 100%; height: 13px;
+            background: linear-gradient(-45deg, transparent 9px, var(--paper) 0), linear-gradient(45deg, transparent 9px, var(--paper) 0);
+            background-size: 18px 18px;
+            background-repeat: repeat-x;
+        }
+
+        .jagged-bottom {
+            position: absolute;
+            bottom: -12px; left: 0; width: 100%; height: 13px;
+            background: linear-gradient(-45deg, var(--paper) 9px, transparent 0), linear-gradient(45deg, var(--paper) 9px, transparent 0);
+            background-size: 18px 18px;
+            background-repeat: repeat-x;
+        }
+
+        .polaroid {
+            background: #fff;
+            padding: 8px 8px 35px 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 1px solid #f5e6e6;
+            position: relative;
+        }
+        @media (min-width: 640px) { .polaroid { padding: 10px 10px 45px 10px; } }
+
+        /* Realistic Tape Effects */
+        .tape {
+            position: absolute;
+            mix-blend-mode: multiply;
+            opacity: 0.85;
+            z-index: 20;
+        }
+        .tape-1 { clip-path: polygon(1% 2%, 99% 0%, 98% 98%, 0% 100%); }
+        .tape-2 { clip-path: polygon(0% 0%, 100% 1%, 99% 100%, 2% 99%); }
+        .tape-3 { clip-path: polygon(2% 1%, 98% 2%, 100% 99%, 0% 98%); }
+        
+        .bg-tape-pink { background-color: #ffb6c1; }
+        .bg-tape-yellow { background-color: #fdf096; }
+        .bg-tape-mint { background-color: #aee6e6; }
+        .bg-tape-blue { background-color: #bce3f2; }
+
+        /* Floating Animation for Hearts & Stars */
+        @keyframes float-anim {
+            0%, 100% { transform: translateY(0) scale(1) rotate(var(--rot, 0deg)); }
+            50% { transform: translateY(-6px) scale(1.05) rotate(calc(var(--rot, 0deg) + 5deg)); }
+        }
+        .decor-float {
+            animation: float-anim 3.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .delay-1 { animation-delay: 0.5s; }
+        .delay-2 { animation-delay: 1.5s; }
+
+        .dotted-leader { flex-grow: 1; border-bottom: 2px dotted var(--text-light); margin: 0 8px; opacity: 0.3; transform: translateY(-4px); }
+
+        .modal-overlay { background-color: rgba(138, 81, 107, 0.4); backdrop-filter: blur(4px); }
+
+        .portfolio-card { cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .portfolio-card:hover { transform: translateY(-5px); }
+
+        .link-item {
+            display: block; width: 100%; padding: 12px; margin-bottom: 8px; background: white;
+            border-radius: 12px; border: 1.5px solid var(--line-color); color: var(--text-dark);
+            font-size: 0.85rem; transition: all 0.2s; text-align: center; font-weight: 500;
+        }
+        .link-item:hover { background: var(--bg-main); border-color: var(--accent-pink); }
+    </style>
+</head>
+<body class="min-h-screen py-6 sm:py-10 px-2 sm:px-4 md:px-8 relative selection:bg-[#fcf2b6] selection:text-[#8a516b]">
+
+    <!-- Global Decorations -->
+    <svg class="decor-float delay-2 fixed top-10 left-5 w-10 h-10 text-[#a2dcd4] opacity-40 z-0" style="--rot: -12deg;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+
+    <div class="max-w-5xl mx-auto flex flex-col gap-8 sm:gap-12 items-center w-full">
+        
+        <!-- HEADER HERO SECTION - SIDE-BY-SIDE -->
+        <div class="w-full flex flex-row justify-between items-stretch gap-2 sm:gap-10 mt-2 sm:mt-6 relative z-20 px-1 sm:px-4">
+            
+            <!-- Left Services -->
+            <div class="relative flex-[1.6] sm:flex-1 flex flex-col">
+                <div class="absolute inset-0 bg-[#f5a9cb] transform rotate-[-1deg] translate-x-[-4px] translate-y-[6px] sm:translate-x-[-8px] sm:translate-y-[12px] opacity-80 z-0 rounded-md"></div>
+                <div class="bg-white relative z-10 p-3 sm:p-10 transform rotate-[-0.5deg] rounded-md shadow-sm border border-gray-100/50 flex-1 flex flex-col justify-center">
+                    
+                    <!-- Updated Tape -->
+                    <div class="tape bg-tape-pink tape-1 -top-4 left-1/2 transform -translate-x-1/2 rotate-1 w-24 sm:w-32 h-6 sm:h-8"></div>
+                    
+                    <!-- Decor Heart -->
+                    <svg class="decor-float absolute top-4 sm:top-8 right-4 sm:right-8 w-4 sm:w-6 h-4 sm:h-6 text-[#ffc2b3] opacity-80 z-20" style="--rot: 15deg;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+
+                    <div class="space-y-2 sm:space-y-6 pt-2">
+                        <div>
+                            <h2 class="font-fredoka text-[#8a516b] font-bold text-[12px] sm:text-3xl uppercase tracking-tight leading-none">ChaNat ART SERVICES</h2>
+                            <p class="mt-1 sm:mt-3 text-[#8a516b] text-[9px] sm:text-base font-medium leading-tight">
+                                เรทงานลงสีของตกแต่งร้านชา ยินดีให้บริการด้วยใจค่ะ
+                            </p>
+                        </div>
+                        
+                        <div class="text-[#bd859b] text-[8px] sm:text-sm leading-tight sm:leading-relaxed bg-[#fff8fb] p-2 sm:p-5 rounded-lg border border-[#f2adcc]/30 relative">
+                            <!-- Star decor on inner box -->
+                            <svg class="decor-float delay-1 absolute -top-2 -right-2 w-4 h-4 text-[#fcf2b6]" style="--rot: 25deg;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+
+                            <p class="font-bold text-[#8a516b] mb-1 uppercase text-[8px] sm:text-xs">งานที่รับทำ:</p>
+                            <ul class="list-none space-y-0.5 sm:space-y-1.5 font-medium">
+                                <li>- รับวาดของตกแต่ง</li>
+                                <li>- รับลงสีของตกแต่ง</li>
+                                <li>- แนวน่ารัก / แนว ADS / แนวดินสอสีน้ำ</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="text-center">
+                            <p class="text-[7px] sm:text-xs text-[#bd859b] font-medium border-t border-dashed border-[#f2adcc] pt-1 sm:pt-4 italic">
+                                ออกแบบจัดวางอย่างใส่ใจประสานงานได้ตลอดค่ะ
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Polaroid -->
+            <div class="relative flex-1 flex flex-col items-center shrink-0 pt-2">
+                <div class="relative bg-white border border-[#eb7aa6] sm:border-2 rounded-full px-2 sm:px-5 py-0.5 sm:py-1.5 mb-2 sm:mb-4 z-30 transform rotate-2 shadow-sm">
+                    <span class="font-fredoka text-[#eb7aa6] text-[7px] sm:text-[11px] font-bold tracking-wide uppercase">CHANAT SHOP</span>
+                </div>
+
+                <div class="polaroid transform rotate-[-3deg] w-full max-w-[110px] sm:max-w-[240px] z-10 border border-white sm:border-2">
+                    <div class="tape bg-tape-mint tape-2 -top-3 left-1/2 transform -translate-x-1/2 rotate-2 w-12 sm:w-20 h-4 sm:h-6"></div>
+                    <div class="tape bg-tape-yellow tape-3 -bottom-2 -left-2 transform -rotate-12 w-8 sm:w-12 h-3 sm:h-5"></div>
+
+                    <svg class="decor-float absolute -left-3 sm:-left-6 top-10 sm:top-20 w-5 sm:w-8 h-5 sm:h-8 text-[#eb7aa6] opacity-70 z-20" style="--rot: -20deg;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+
+                    <div class="w-full aspect-[4/5] bg-[#fff9eb] overflow-hidden rounded-sm relative border border-[#f5e687]/30">
+                        <img src="https://lh3.googleusercontent.com/d/1pDLunIV4mnnoyB52iq0nFXcPI7_pGZUY" alt="ChaNat Profile" class="w-full h-full object-cover" onerror="this.src='logo1.png'">
+                    </div>
+                    <div class="absolute bottom-1 sm:bottom-3 right-0 bg-[#8a516b] text-white px-2 sm:px-4 py-0.5 sm:py-1.5 text-[5px] sm:text-[9px] font-fredoka font-bold rounded-l-md tracking-tighter sm:tracking-widest shadow-md">
+                        WELCOME TO MY SHOP
+                    </div>
+                </div>
+                
+                <svg class="decor-float delay-1 absolute top-10 -right-4 w-6 h-6 text-[#b8e9ed] opacity-80 z-0" style="--rot: 12deg;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT (BOTTOM NOTEBOOK) -->
+        <div class="paper-container w-full rounded-sm pt-12 sm:pt-16 pb-16 sm:pb-20 px-4 sm:px-10 lg:px-16 z-10 relative mt-6 sm:mt-10">
+            <div class="jagged-top"></div>
+            <div class="jagged-bottom"></div>
+            
+            <div class="tape bg-tape-yellow tape-2 -top-3 -left-4 transform -rotate-3 w-24 sm:w-36 h-6 sm:h-8 z-20"></div>
+            
+            <svg class="decor-float absolute top-10 right-8 sm:right-24 w-5 sm:w-8 h-5 sm:h-8 text-[#fcf2b6] drop-shadow-sm z-0" style="--rot: 25deg;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="decor-float delay-1 absolute top-20 left-4 sm:left-12 w-4 sm:w-6 h-4 sm:h-6 text-[#eb7aa6] opacity-60 z-0" style="--rot: -15deg;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+
+            <!-- Status Bar (แถบเช็คคิวงาน) และ ส่วน Badges (ปุ่มกลมเล็กๆ ด้านบน) -->
+            <a href="https://chanat.pages.dev/" target="_blank" class="absolute -top-4 right-4 bg-white border-2 border-[#eb7aa6] rounded-full px-3 sm:px-5 py-1 z-20 flex items-center shadow-sm hover:scale-105 transition-transform">
+                <span class="font-fredoka text-[#eb7aa6] text-[8px] sm:text-xs font-bold tracking-wider uppercase leading-none">🗓️ CHECK QUEUE</span>
+            </a>
+
+            <div class="mb-10 sm:mb-14 pt-2 relative z-10">
+                <h1 class="font-fredoka text-[#8a516b] text-3xl sm:text-5xl font-black tracking-tighter uppercase leading-none">CHANAT SHOP</h1>
+                <div class="flex gap-2 mt-2 opacity-60">
+                    <svg class="w-4 h-4 text-[#eb7aa6]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    <svg class="w-4 h-4 text-[#fcf2b6]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+            </div>
+
+            <!-- SECTIONS -->
+            <div class="space-y-12 sm:space-y-16">
+                
+                <!-- 01. Portfolio Section (Modals) -->
+                <div class="schedule-item flex relative">
+                    <div class="w-8 sm:w-12 pt-1 shrink-0 font-fredoka text-[#eb7aa6] font-bold text-lg sm:text-2xl leading-none">01.</div>
+                    <div class="flex-1">
+                        <!-- ปุ่มเช็คคิวงานแบบเส้นประ / หัวข้อ -->
+                        <div class="flex items-center w-full mb-6">
+                            <h2 class="font-fredoka text-[#8a516b] font-bold text-base sm:text-xl uppercase tracking-wider">PORTFOLIO & LINKS</h2>
+                            <div class="dotted-leader"></div>
+                        </div>
+                        
+                        <p class="text-[10px] sm:text-xs text-[#bd859b] mb-6 italic">*คลิกที่หมวดหมู่เพื่อดูตัวอย่างงานหรือลิงก์สำคัญ</p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                            <a href="https://drive.google.com/drive/folders/1pDLunIV4mnnoyB52iq0nFXcPI7_pGZUY" target="_blank" class="portfolio-card bg-[#fffcf0] p-6 sm:p-10 rounded-2xl border-2 border-[#fceb9a] shadow-sm flex flex-col items-center relative">
+                                <svg class="decor-float delay-2 absolute bottom-3 left-3 w-4 h-4 text-[#fceb9a]" style="--rot: -10deg;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                <div class="bg-[#fceb9a] text-[#8a516b] px-4 py-1 rounded-full text-[9px] sm:text-[10px] font-bold border-2 border-white mb-3 relative z-10">Google Drive</div>
+                                <span class="text-xs sm:text-sm font-bold text-[#8a516b] relative z-10 text-center">⭐️ ตัวอย่างงาน คลิ๊ก</span>
+                            </a>
+                            <a href="https://chanat.pages.dev/" target="_blank" class="portfolio-card bg-[#f5f8ff] p-6 sm:p-10 rounded-2xl border-2 border-[#b8e9ed] shadow-sm flex flex-col items-center relative">
+                                <svg class="decor-float absolute top-4 right-4 w-3 h-3 text-[#b8e9ed]" style="--rot: 20deg;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                <div class="bg-[#b8e9ed] text-[#8a516b] px-4 py-1 rounded-full text-[9px] sm:text-[10px] font-bold border-2 border-white mb-3 relative z-10">Queue System</div>
+                                <span class="text-xs sm:text-sm font-bold text-[#8a516b] relative z-10 text-center">🗓️ เช็คคิว คลิ๊ก</span>
+                            </a>
+                            <a href="https://linkbio.co/cha-nat" target="_blank" class="portfolio-card bg-[#fff8fb] p-6 sm:p-10 rounded-2xl border-2 border-[#f2adcc] shadow-sm flex flex-col items-center relative">
+                                <svg class="decor-float delay-1 absolute top-5 left-5 w-4 h-4 text-[#f2adcc]" style="--rot: -15deg;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                <div class="bg-[#f2adcc] text-white px-4 py-1 rounded-full text-[9px] sm:text-[10px] font-bold border-2 border-white mb-3 relative z-10">Link Bio</div>
+                                <span class="text-xs sm:text-sm font-bold text-[#8a516b] relative z-10 text-center">🌸 เลือกดูลายเส้น คลิ๊ก</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 02. Pricing & Add-on -->
+                <div class="schedule-item flex relative">
+                    <svg class="decor-float absolute -left-2 top-10 w-5 h-5 text-[#fcf2b6]" style="--rot: -10deg;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    
+                    <div class="w-8 sm:w-12 pt-1 shrink-0 font-fredoka text-[#eb7aa6] font-bold text-lg sm:text-2xl leading-none">02.</div>
+                    <div class="flex-1">
+                        <h2 class="font-fredoka text-[#8a516b] font-bold text-base sm:text-xl uppercase tracking-wider mb-5">PRICING RATE</h2>
+                        <div class="bg-[#fffdf0] p-4 sm:p-6 rounded-2xl border-2 border-[#fceb9a] shadow-sm space-y-6 relative">
+                            <div class="tape bg-tape-yellow tape-1 -top-3 left-6 transform rotate-2 w-20 h-5"></div>
+                            
+                            <p class="text-[10px] sm:text-xs text-[#bd859b] font-medium italic relative z-10 border-b border-dashed border-[#fceb9a] pb-2">
+                                *ราคาจะแยกตามรูปแบบการลงสี และเป็นราคาต่อเซ็ต / กรณีพกลายเส้นมาเอง ทางร้านจะประเมินราคาตามเรทในตารางเท่านั้น
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start relative z-10">
+                                <!-- 1. แนวน่ารัก -->
+                                <div class="space-y-3 bg-white/60 p-4 rounded-xl border border-[#fceb9a]">
+                                    <p class="text-[#8a516b] font-bold text-base flex items-center gap-1">🧸 1. แนวน่ารัก</p>
+                                    <div class="text-xs space-y-2 text-[#8a516b] font-medium">
+                                        <div class="border-b border-pink-100 pb-1">
+                                            <p class="font-bold text-pink-600 text-[11px]">Rate 1 (5 ชิ้น รายละเอียดน้อย)</p>
+                                            <p class="flex justify-between text-[11px]"><span>เส้น 2 สี: 49.-</span> <span>เส้นตามสี: 59.-</span> <span>ทับเส้น V1: 79.-</span> <span>V2: 89.-</span></p>
+                                        </div>
+                                        <div class="border-b border-pink-100 pb-1">
+                                            <p class="font-bold text-pink-600 text-[11px]">Rate 2 (5-6 ชิ้น รายละเอียดกลาง / 7 ชิ้น น้อย)</p>
+                                            <p class="flex justify-between text-[11px]"><span>เส้น 2 สี: 69.-</span> <span>เส้นตามสี: 89.-</span> <span>ทับเส้น V1: 109.-</span> <span>V2: 119.-</span></p>
+                                        </div>
+                                        <div class="border-b border-pink-100 pb-1">
+                                            <p class="font-bold text-pink-600 text-[11px]">Rate 3 (7 ชิ้นขึ้นไป รายละเอียดปานกลาง)</p>
+                                            <p class="flex justify-between text-[11px]"><span>เส้น 2 สี: 89.-</span> <span>เส้นตามสี: 109.-</span> <span>ทับเส้น V1: 139.-</span> <span>V2: 149.-</span></p>
+                                        </div>
+                                        <div class="border-b border-pink-100 pb-1">
+                                            <p class="font-bold text-pink-600 text-[11px]">Rate 4 (8 ชิ้นขึ้นไป รายละเอียดเยอะ)</p>
+                                            <p class="flex justify-between text-[11px]"><span>เส้น 2 สี: 139.-</span> <span>เส้นตามสี: 159.-</span> <span>ทับเส้น V1: 219.-</span> <span>V2: 229.-</span></p>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-pink-600 text-[11px]">Rate 5 (8 ชิ้นขึ้นไป รายละเอียดเยอะมาก)</p>
+                                            <p class="flex justify-between text-[11px]"><span>...อ่านต่อพาร์ท 2...</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 2. แนว ADS / แนวดินสอสีน้ำ -->
+                                <div class="space-y-3 bg-white/60 p-4 rounded-xl border border-[#fceb9a]">
+                                    <p class="text-[#8a516b] font-bold text-base flex items-center gap-1">🎨 2. แนว ADS / แนวดินสอสีน้ำ</p>
+                                    <div class="text-xs space-y-2 text-[#8a516b] font-medium">
+                                        <div class="border-b border-pink-100 pb-1">
+                                            <p class="font-bold text-pink-600 text-[11px]">Rate 1 (5 ชิ้น รายละเอียดน้อย)</p>
+                                            <p class="flex justify-between text-[11px]"><span>เส้น 2 สี: 59.-</span> <span>เส้นตามสี: 69.-</span> <span>ทับเส้น V1: 89.-</span> <span>V2: 99.-</span></p>
+                                        </div>
+                                        <div class="border-b border-pink-100 pb-1">
+                                            <p class="font-bold text-pink-600 text-[11px]">Rate 2 (5-6 ชิ้น รายละเอียดกลาง / 7 ชิ้น น้อย)</p>
+                                            <p class="flex justify-between text-[11px]"><span>...ดูข้อมูลเต็มในสคริปต์ป๊อปอัพราคา...</span></p>
+                                        </div>
+                                        <div class="mt-4 bg-[#fff8fb] p-3 rounded-lg border border-pink-100">
+                                            <p class="font-bold text-pink-700 text-[11px] mb-1">🎁 Add-on เสริมพิเศษ</p>
+                                            <ul class="space-y-1 text-[11px] list-disc list-inside text-[#bd859b]">
+                                                <li>แก้งานเกินบรีฟ/เพิ่มชิ้น: เริ่มต้น 5 - 20+ บาท</li>
+                                                <li>ดราฟต์เพิ่มเส้น: เพิ่ม 15 - 35 บาท/เซ็ต</li>
+                                                <li>ปรับขนาด/จัดเลย์เอาต์ตามสั่ง: ฟรี!</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ปุ่มเปิดดูตารางราคาเต็ม (Popup) -->
+                            <div class="pt-2 text-center relative z-20">
+                                <button onclick="openModal('priceModal')" class="bg-[#eb7aa6] hover:bg-[#d6618f] text-white text-xs sm:text-sm font-bold px-6 py-2.5 rounded-full shadow-md transition-all transform hover:scale-105">
+                                    🔍 ดูตารางเรทราคารายละเอียดทุกเรท (Rate 1 - 5)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 03. Briefing Guide -->
+                <div class="schedule-item flex relative">
+                    <div class="w-8 sm:w-12 pt-1 shrink-0 font-fredoka text-[#eb7aa6] font-bold text-lg sm:text-2xl leading-none">03.</div>
+                    <div class="flex-1">
+                        <div class="flex items-center w-full mb-5">
+                            <h2 class="font-fredoka text-[#8a516b] font-bold text-base sm:text-xl uppercase tracking-wider">BRIEFING GUIDE</h2>
+                            <div class="dotted-leader"></div>
+                        </div>
+
+                        <div class="bg-[#f2fcfb] p-5 sm:p-8 rounded-2xl border-2 border-[#b8e9ed] shadow-sm relative overflow-hidden">
+                            <div class="tape bg-tape-mint tape-3 top-2 right-4 transform rotate-1 w-24 h-6"></div>
+                            
+                            <p class="text-[11px] sm:text-xs text-[#8a516b] font-medium leading-relaxed mb-6 bg-white/80 p-3 rounded-xl border border-[#b8e9ed]/50">
+                                เพื่อความรวดเร็วและตรงใจ รบกวนลูกค้าส่งข้อมูลบรีฟตามหัวข้อด้านล่างนี้ได้เลยนะคะ 🌸
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs sm:text-sm text-[#8a516b] font-medium">
+                                <div class="bg-white/50 p-4 rounded-xl border border-[#b8e9ed]/40 space-y-2">
+                                    <p class="font-bold text-[#4da699]">1. ข้อมูลบรีฟหลักที่ต้องแจ้ง</p>
+                                    <ul class="space-y-1.5 list-disc list-inside pl-1 text-[11px] sm:text-xs">
+                                        <li><span class="font-bold">รูปแบบที่ต้องการ:</span> วาด+ลงสี หรือ ลงสีอย่างเดียว</li>
+                                        <li><span class="font-bold">ประเภทลายเส้น:</span> แนวน่ารัก / แนว ADS / แนวดินสอสีน้ำ</li>
+                                        <li><span class="font-bold">รูปแบบเส้น:</span> เส้น 2 สี / เส้นตามสี / ทับเส้น V1 หรือ V2</li>
+                                        <li><span class="font-bold">โทนสี & สไตล์:</span> พาสเทล, มินิมอล, สดใส หรือคุมโทนร้าน</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-white/50 p-4 rounded-xl border border-[#b8e9ed]/40 space-y-2">
+                                    <p class="font-bold text-[#4da699]">2. แนบไฟล์ประกอบ (สำคัญมาก)</p>
+                                    <ul class="space-y-1.5 list-disc list-inside pl-1 text-[11px] sm:text-xs">
+                                        <li><span class="font-bold">กรณีพกลายเส้นมาเอง:</span> แนบไฟล์ลายเส้นขาว-ดำที่ชัดเจน</li>
+                                        <li><span class="font-bold">ภาพเรฟเฟอเรนซ์:</span> มู้ดแอนด์โทน หรือตัวอย่างที่ชอบ</li>
+                                        <li><span class="font-bold">รายละเอียดของตกแต่ง:</span> จำนวนชิ้น และชื่อของแต่ละชิ้น</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 04. Terms & Agreement -->
+                <div class="schedule-item flex relative">
+                    <div class="w-8 sm:w-12 pt-1 shrink-0 font-fredoka text-[#eb7aa6] font-bold text-lg sm:text-2xl leading-none">04.</div>
+                    <div class="flex-1">
+                        <h2 class="font-fredoka text-[#8a516b] font-bold text-base sm:text-xl uppercase tracking-wider mb-5">TERMS & AGREEMENT</h2>
+                        <div class="bg-[#fff9f8] p-5 sm:p-8 rounded-2xl border-2 border-[#ffc2b3] shadow-sm relative">
+                            <div class="tape bg-tape-blue tape-2 -top-2 left-1/3 transform -rotate-2 w-28 h-6"></div>
+                            
+                            <ul class="space-y-3 text-xs sm:text-sm text-[#8a516b] font-medium">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-[#ff7a5c] font-bold">⏱️</span>
+                                    <span><span class="font-bold text-[#ff7a5c]">ระยะเวลาทำงาน:</span> จัดส่งภายใน 1 - 3 วัน (ขึ้นอยู่กับคิวงานและรายละเอียดชิ้นงานขณะนั้น)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-[#ff7a5c] font-bold">📝</span>
+                                    <span><span class="font-bold text-[#ff7a5c]">การแก้งาน:</span> แก้ไขได้ฟรี 2 ครั้งในขอบเขตบรีฟเดิม หากเกินบรีฟหรือเพิ่มชิ้นงานภายหลัง ขออนุญาตคิดค่าบริการเพิ่มตามความเหมาะสมค่ะ</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-[#ff7a5c] font-bold">🔒</span>
+                                    <span><span class="font-bold text-[#ff7a5c]">ลิขสิทธิ์:</span> ราคาที่แจ้งเป็นราคาสำหรับใช้งานเชิงพาณิชย์ทั่วไปในร้านชา ไม่อนุญาตให้นำไปขายต่อเป็นไฟล์ดิจิทัลดั้งเดิมหรือแจกจ่ายต่อค่ะ</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer Note inside the book -->
+            <div class="mt-14 sm:mt-20 pt-8 border-t border-dashed border-[#eb7aa6]/40 text-center relative z-10">
+                <p class="font-fredoka text-[#eb7aa6] text-xs sm:text-sm font-bold uppercase tracking-widest mb-1">Thank you for choosing ChaNat</p>
+                <p class="text-[10px] sm:text-xs text-[#bd859b] font-medium">ยินดีรังสรรค์ผลงานน่ารัก ๆ เพื่อร้านชาของคุณลูกค้าทุกท่านค่ะ 💖</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: DETAILED PRICE TABLE -->
+    <div id="priceModal" class="modal-overlay fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white rounded-2xl border-2 border-[#eb7aa6] max-w-4xl w-full max-h-[85vh] overflow-y-auto p-4 sm:p-8 shadow-2xl relative transform scale-95 transition-transform duration-300">
+            
+            <button onclick="closeModal('priceModal')" class="absolute top-4 right-4 text-[#bd859b] hover:text-[#8a516b] bg-gray-50 hover:bg-gray-100 rounded-full p-2 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            <h3 class="font-fredoka text-[#8a516b] text-xl sm:text-2xl font-bold uppercase border-b-2 border-dashed border-pink-100 pb-3 pr-8">
+                📊 ตารางเรทราคาลงสีของตกแต่งร้านชาอย่างละเอียด
+            </h3>
+
+            <div class="mt-6 space-y-8 text-xs sm:text-sm text-[#8a516b]">
+                <!-- ตารางที่ 1: แนวน่ารัก -->
+                <div>
+                    <h4 class="font-bold text-base text-pink-600 mb-3 flex items-center gap-1">🧸 1. เรทราคา "แนวน่ารัก" (ต่อเซ็ต)</h4>
+                    <div class="overflow-x-auto rounded-xl border border-pink-100">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-pink-50/70 border-b border-pink-100 text-[11px] sm:text-xs">
+                                    <th class="p-3 font-bold">ระดับปริมาณ & รายละเอียด</th>
+                                    <th class="p-3 font-bold text-center">เส้น 2 สี</th>
+                                    <th class="p-3 font-bold text-center">เส้นตามสี</th>
+                                    <th class="p-3 font-bold text-center">ทับเส้น V1</th>
+                                    <th class="p-3 font-bold text-center">ทับเส้น V2</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-pink-50 font-medium text-[11px] sm:text-xs">
+                                <tr>
+                                    <td class="p-3"><span class="font-bold text-pink-700">Rate 1:</span> 5 ชิ้น (รายละเอียดน้อย)</td>
+                                    <td class="p-3 text-center">49.-</td><td class="p-3 text-center">59.-</td><td class="p-3 text-center">79.-</td><td class="p-3 text-center">89.-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3"><span class="font-bold text-pink-700">Rate 2:</span> 5-6 ชิ้น (รายละเอียดกลาง) / 7 ชิ้น (รายละเอียดน้อย)</td>
+                                    <td class="p-3 text-center">69.-</td><td class="p-3 text-center">89.-</td><td class="p-3 text-center">109.-</td><td class="p-3 text-center">119.-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3"><span class="font-bold text-pink-700">Rate 3:</span> 7 ชิ้นขึ้นไป (รายละเอียดปานกลาง)</td>
+                                    <td class="p-3 text-center">89.-</td><td class="p-3 text-center">109.-</td><td class="p-3 text-center">139.-</td><td class="p-3 text-center">149.-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3"><span class="font-bold text-pink-700">Rate 4:</span> 8 ชิ้นขึ้นไป (รายละเอียดเยอะ)</td>
+                                    <td class="p-3 text-center">139.-</td><td class="p-3 text-center">159.-</td><td class="p-3 text-center">219.-</td><td class="p-3 text-center">229.-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3"><span class="font-bold text-pink-700">Rate 5:</span> 8 ชิ้นขึ้นไป (รายละเอียดเยอะมากพิเศษ)</td>
+                                    <td class="p-3 text-center">159.-</td><td class="p-3 text-center">179.-</td><td class="p-3 text-center">249.-</td><td class="p-3 text-center">259.-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ตารางที่ 2: แนว ADS / แนวดินสอสีน้ำ -->
+                <div>
+                    <h4 class="font-bold text-base text-[#4da699] mb-3 flex items-center gap-1">🎨 2. เรทราคา "แนว ADS / แนวดินสอสีน้ำ" (ต่อเซ็ต)</h4>
+                    <div class="overflow-x-auto rounded-xl border border-teal-100">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-teal-50/50 border-b border-teal-100 text-[11px] sm:text-xs">
+                                    <th class="p-3 font-bold">ระดับปริมาณ & รายละเอียด</th>
+                                    <th class="p-3 font-bold text-center">เส้น 2 สี</th>
+                                    <th class="p-3 font-bold text-center">เส้นตามสี</th>
+                                    <th class="p-3 font-bold text-center">ทับเส้น V1</th>
+                                    <th class="p-3 font-bold text-center">ทับเส้น V2</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-teal-50 font-medium text-[11px] sm:text-xs">
+                                <tr>
+                                    <td class="p-3"><span class="font-bold text-teal-700">Rate 1:</span> 5 ชิ้น (รายละเอียดน้อย)</td>
+                                    <td class="p-3 text-center">59.-</td><td class="p-3 text-center">69.-</td><td class="p-3 text-center">89.-</td><td class="p-3 text-center">99.-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3"><span class="font-bold text-teal-700">Rate 2:</span> 5-6 ชิ้น (รายละเอียดกลาง) / 7 ชิ้น (รายละเอียดน้อย)</td>
+                                    <td class="p-3 text-center">79.-</td><td class="p-3 text-center">99.-</td><td class="p-3 text-center">119.-</td><td class="p-3 text-center">129.-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3"><span class="font-bold text-teal-700">Rate 3:</span> 7 ชิ้นขึ้นไป (รายละเอียดปานกลาง)</td>
+                                    <td class="p-3 text-center">99.-</td><td class="p-3 text-center">119.-</td><td class="p-3 text-center">149.-</td><td class="p-3 text-center">159.-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3"><span class="font-bold text-teal-700">Rate 4:</span> 8 ชิ้นขึ้นไป (รายละเอียดเยอะ)</td>
+                                    <td class="p-3 text-center">149.-</td><td class="p-3 text-center">169.-</td><td class="p-3 text-center">229.-</td><td class="p-3 text-center">239.-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3"><span class="font-bold text-teal-700">Rate 5:</span> 8 ชิ้นขึ้นไป (รายละเอียดเยอะมากพิเศษ)</td>
+                                    <td class="p-3 text-center">169.-</td><td class="p-3 text-center">189.-</td><td class="p-3 text-center">259.-</td><td class="p-3 text-center">269.-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL AND INTERACTIVE SCRIPTS -->
+    <script>
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div').classList.remove('scale-95');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.add('opacity-0');
+            modal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on overlay click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                closeModal(event.target.id);
+            }
+        }
+    </script>
+</body>
+</html>
